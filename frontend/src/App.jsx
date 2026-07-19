@@ -1156,44 +1156,156 @@ const Contact = () => {
 // 8.5 FORGOT PASSWORD
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
-  
+  const [status, setStatus] = useState('idle'); // 'idle' | 'loading' | 'success' | 'error'
+  const [errorMsg, setErrorMsg] = useState('');
+
   const handleReset = async (e) => {
     e.preventDefault();
-    if (email) {
-      try {
-        await sendPasswordResetEmail(auth, email);
-        alert('கடவுச்சொல்லை மீட்டமைப்பதற்கான இணைப்பு உங்கள் மின்னஞ்சலுக்கு அனுப்பப்பட்டுள்ளது! (Password reset link sent to your email!)');
-      } catch (err) {
-        console.error(err);
-        alert('பிழை ஏற்பட்டது. (Error: ' + err.code + ')');
-      }
+    if (!email.trim()) return;
+
+    setStatus('loading');
+    setErrorMsg('');
+
+    // Redirect user to login page after they click the reset link
+    const actionCodeSettings = {
+      url: window.location.origin + '/shop/login',
+      handleCodeInApp: false,
+    };
+
+    try {
+      await sendPasswordResetEmail(auth, email.trim(), actionCodeSettings);
+      setStatus('success');
+    } catch (err) {
+      console.error('Password reset error:', err);
+      const errorMap = {
+        'auth/user-not-found':       'இந்த மின்னஞ்சல் முகவரிக்கு எந்த கணக்கும் இல்லை. (No account found for this email.)',
+        'auth/invalid-email':        'மின்னஞ்சல் முகவரி தவறானது. (Invalid email address.)',
+        'auth/too-many-requests':    'மிகவும் அதிகமான முயற்சிகள். சிறிது நேரம் கழித்து மீண்டும் முயலவும். (Too many requests. Please try again later.)',
+        'auth/network-request-failed': 'இணைய இணைப்பு பிழை. (Network error. Check your connection.)',
+      };
+      setErrorMsg(errorMap[err.code] || `பிழை ஏற்பட்டது: ${err.code}`);
+      setStatus('error');
     }
   };
 
   return (
-    <section style={{ paddingTop: '140px', minHeight: '80vh', paddingLeft: '15px', paddingRight: '15px' }}>
+    <section style={{ paddingTop: 'clamp(90px, 12vw, 140px)', minHeight: '80vh', paddingLeft: '15px', paddingRight: '15px' }}>
       <div className="form-card" style={{ width: '100%', maxWidth: '500px', margin: '0 auto', boxSizing: 'border-box' }}>
-        <h2 className="form-title" style={{ fontSize: '1.5rem' }}>கடவுச்சொல் மீட்பு (Forgot Password)</h2>
-        <form onSubmit={handleReset} autoComplete="off">
-          <div className="form-group">
-            <label>மின்னஞ்சல் (Email)</label>
-            <input type="email" placeholder="example@gmail.com" value={email} onChange={e => setEmail(e.target.value)} required autoComplete="off" />
+
+        {status === 'success' ? (
+          /* ===== SUCCESS STATE ===== */
+          <div style={{ textAlign: 'center' }}>
+            <div style={{
+              width: '80px', height: '80px', borderRadius: '50%',
+              background: 'linear-gradient(135deg, var(--primary-light), var(--primary-color))',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              margin: '0 auto 24px auto',
+              boxShadow: '0 8px 24px rgba(30, 94, 58, 0.25)',
+              animation: 'pulse 2s infinite'
+            }}>
+              <i className="fas fa-envelope-open-text" style={{ fontSize: '2rem', color: 'white' }}></i>
+            </div>
+            <h2 style={{ fontSize: '1.5rem', color: 'var(--primary-dark)', marginBottom: '12px', fontWeight: '700' }}>
+              இணைப்பு அனுப்பப்பட்டது! ✅
+            </h2>
+            <p style={{ color: 'var(--text-light)', fontSize: '1rem', marginBottom: '8px', lineHeight: '1.6' }}>
+              <strong style={{ color: 'var(--primary-dark)' }}>{email}</strong> என்ற மின்னஞ்சலுக்கு கடவுச்சொல்லை மீட்டமைப்பதற்கான இணைப்பு அனுப்பப்பட்டது.
+            </p>
+            <p style={{ color: 'var(--text-light)', fontSize: '0.92rem', lineHeight: '1.6' }}>
+              (A password reset link has been sent to your email. Please check your inbox.)
+            </p>
+            <div style={{
+              background: 'rgba(252, 163, 17, 0.1)', border: '1px solid rgba(252, 163, 17, 0.3)',
+              borderRadius: '10px', padding: '12px 16px', margin: '20px 0',
+              fontSize: '0.85rem', color: '#7a5200', textAlign: 'left', lineHeight: '1.7'
+            }}>
+              <i className="fas fa-info-circle"></i>&nbsp;
+              மின்னஞ்சல் வரவில்லை என்றால், உங்களது <strong>Spam / Junk</strong> ஃபோல்டரை சரிபார்க்கவும்.<br/>
+              (If you don't receive it, please check your Spam / Junk folder.)
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <button
+                onClick={() => { setStatus('idle'); setEmail(''); }}
+                className="btn btn-secondary w-100"
+                style={{ padding: '12px' }}
+              >
+                <i className="fas fa-redo"></i> வேறு மின்னஞ்சல் முயல்க (Try another email)
+              </button>
+              <Link
+                to="/login"
+                className="btn btn-primary w-100"
+                style={{ padding: '12px', color: 'white', textDecoration: 'none' }}
+              >
+                <i className="fas fa-arrow-left"></i> உள்நுழைவுக்கு திரும்பு (Back to Login)
+              </Link>
+            </div>
           </div>
-          <button type="submit" className="btn btn-primary w-100" style={{ padding: '12px', marginTop: '10px' }}>
-            இணைப்பை அனுப்பு (Send Link)
-          </button>
-        </form>
-        <p style={{ marginTop: '15px', textAlign: 'center', fontSize: '0.85rem', color: '#ff6b6b', fontWeight: '600' }}>
-          குறிப்பு: மின்னஞ்சல் வரவில்லை என்றால், தயவுசெய்து உங்களது Spam / Junk ஃபோல்டரை சரிபார்க்கவும்.<br/>
-          (Note: If you don't receive the email, please check your Spam / Junk folder.)
-        </p>
-        <p style={{ marginTop: '20px', textAlign: 'center', fontSize: '0.9rem', color: 'var(--text-light)' }}>
-          <Link to="/login" style={{ color: 'var(--primary-color)', fontWeight: '600', textDecoration: 'none' }}>உள்நுழைக (Back to Login)</Link>
-        </p>
+        ) : (
+          /* ===== FORM STATE ===== */
+          <>
+            <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+              <div style={{
+                width: '64px', height: '64px', borderRadius: '50%',
+                background: 'rgba(45, 138, 86, 0.1)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                margin: '0 auto 16px auto'
+              }}>
+                <i className="fas fa-lock-open" style={{ fontSize: '1.6rem', color: 'var(--primary-color)' }}></i>
+              </div>
+              <h2 className="form-title" style={{ marginBottom: '6px' }}>கடவுச்சொல் மீட்பு</h2>
+              <p style={{ color: 'var(--text-light)', fontSize: '0.92rem' }}>
+                உங்கள் மின்னஞ்சல் முகவரியை உள்ளிடவும். மீட்டமைப்பு இணைப்பு அனுப்பப்படும்.<br/>
+                (Enter your email to receive a password reset link.)
+              </p>
+            </div>
+
+            <form onSubmit={handleReset} autoComplete="off">
+              <div className="form-group">
+                <label>மின்னஞ்சல் (Email)</label>
+                <input
+                  type="email"
+                  placeholder="example@gmail.com"
+                  value={email}
+                  onChange={e => { setEmail(e.target.value); if (status === 'error') setStatus('idle'); }}
+                  required
+                  autoComplete="off"
+                  disabled={status === 'loading'}
+                />
+              </div>
+
+              {/* Inline error */}
+              {status === 'error' && (
+                <div className="form-response error" style={{ marginTop: '0', marginBottom: '16px' }}>
+                  <i className="fas fa-exclamation-circle"></i>&nbsp;{errorMsg}
+                </div>
+              )}
+
+              <button
+                type="submit"
+                className="btn btn-primary w-100"
+                style={{ padding: '13px', marginTop: '6px' }}
+                disabled={status === 'loading'}
+              >
+                {status === 'loading'
+                  ? <><i className="fas fa-spinner fa-spin"></i> அனுப்புகிறது...</>
+                  : <><i className="fas fa-paper-plane"></i> இணைப்பை அனுப்பு (Send Reset Link)</>
+                }
+              </button>
+            </form>
+
+            <p style={{ marginTop: '24px', textAlign: 'center', fontSize: '0.9rem', color: 'var(--text-light)' }}>
+              <Link to="/login" style={{ color: 'var(--primary-color)', fontWeight: '600', textDecoration: 'none' }}>
+                <i className="fas fa-arrow-left"></i> உள்நுழைக (Back to Login)
+              </Link>
+            </p>
+          </>
+        )}
+
       </div>
     </section>
   );
 };
+
 
 // 9. AUTHENTICATION (LOGIN / SIGNUP)
 const Login = () => {

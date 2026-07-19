@@ -1173,10 +1173,10 @@ const ForgotPassword = () => {
     <section style={{ paddingTop: '140px', minHeight: '80vh', paddingLeft: '15px', paddingRight: '15px' }}>
       <div className="form-card" style={{ width: '100%', maxWidth: '500px', margin: '0 auto', boxSizing: 'border-box' }}>
         <h2 className="form-title" style={{ fontSize: '1.5rem' }}>கடவுச்சொல் மீட்பு (Forgot Password)</h2>
-        <form onSubmit={handleReset}>
+        <form onSubmit={handleReset} autoComplete="off">
           <div className="form-group">
             <label>மின்னஞ்சல் (Email)</label>
-            <input type="email" placeholder="example@gmail.com" value={email} onChange={e => setEmail(e.target.value)} required />
+            <input type="email" placeholder="example@gmail.com" value={email} onChange={e => setEmail(e.target.value)} required autoComplete="off" />
           </div>
           <button type="submit" className="btn btn-primary w-100" style={{ padding: '12px', marginTop: '10px' }}>
             இணைப்பை அனுப்பு (Send Link)
@@ -1259,14 +1259,14 @@ const Login = () => {
 
       <div className="form-card">
         <h2 className="form-title">உள்நுழைக (Login)</h2>
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleLogin} autoComplete="off">
           <div className="form-group">
             <label>மின்னஞ்சல் (Email)</label>
-            <input type="email" placeholder="example@gmail.com" value={email} onChange={e => setEmail(e.target.value)} required />
+            <input type="email" placeholder="example@gmail.com" value={email} onChange={e => setEmail(e.target.value)} required autoComplete="off" />
           </div>
           <div className="form-group">
             <label>கடவுச்சொல் (Password)</label>
-            <input type="password" placeholder="••••••••" value={pass} onChange={e => setPass(e.target.value)} required />
+            <input type="password" placeholder="••••••••" value={pass} onChange={e => setPass(e.target.value)} required autoComplete="new-password" />
           </div>
           <button type="submit" className="btn btn-primary w-100" style={{ padding: '12px', marginTop: '10px' }}>
             உள்நுழைக (Login)
@@ -1350,14 +1350,14 @@ const Signup = () => {
 
       <div className="form-card">
         <h2 className="form-title">பதிவு செய்க (Sign up)</h2>
-        <form onSubmit={handleSignup}>
+        <form onSubmit={handleSignup} autoComplete="off">
           <div className="form-group">
             <label>மின்னஞ்சல் (Email)</label>
-            <input type="email" placeholder="example@gmail.com" value={email} onChange={e => setEmail(e.target.value)} required />
+            <input type="email" placeholder="example@gmail.com" value={email} onChange={e => setEmail(e.target.value)} required autoComplete="off" />
           </div>
           <div className="form-group">
             <label>கடவுச்சொல் (Password)</label>
-            <input type="password" placeholder="••••••••" value={pass} onChange={e => setPass(e.target.value)} required />
+            <input type="password" placeholder="••••••••" value={pass} onChange={e => setPass(e.target.value)} required autoComplete="new-password" />
           </div>
           <button type="submit" className="btn btn-primary w-100" style={{ padding: '12px', marginTop: '10px' }}>
             கணக்கை உருவாக்கு (Sign up)

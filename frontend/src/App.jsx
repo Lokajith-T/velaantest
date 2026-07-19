@@ -1164,15 +1164,15 @@ const ForgotPassword = () => {
         alert('கடவுச்சொல்லை மீட்டமைப்பதற்கான இணைப்பு உங்கள் மின்னஞ்சலுக்கு அனுப்பப்பட்டுள்ளது! (Password reset link sent to your email!)');
       } catch (err) {
         console.error(err);
-        alert('பிழை ஏற்பட்டது. மின்னஞ்சலை சரிபார்க்கவும்.');
+        alert('பிழை ஏற்பட்டது. (Error: ' + err.code + ')');
       }
     }
   };
 
   return (
-    <section style={{ paddingTop: '140px', minHeight: '80vh' }}>
-      <div className="form-card">
-        <h2 className="form-title">கடவுச்சொல் மீட்பு (Forgot Password)</h2>
+    <section style={{ paddingTop: '140px', minHeight: '80vh', paddingLeft: '15px', paddingRight: '15px' }}>
+      <div className="form-card" style={{ width: '100%', maxWidth: '500px', margin: '0 auto', boxSizing: 'border-box' }}>
+        <h2 className="form-title" style={{ fontSize: '1.5rem' }}>கடவுச்சொல் மீட்பு (Forgot Password)</h2>
         <form onSubmit={handleReset}>
           <div className="form-group">
             <label>மின்னஞ்சல் (Email)</label>
@@ -1182,6 +1182,10 @@ const ForgotPassword = () => {
             இணைப்பை அனுப்பு (Send Link)
           </button>
         </form>
+        <p style={{ marginTop: '15px', textAlign: 'center', fontSize: '0.85rem', color: '#ff6b6b', fontWeight: '600' }}>
+          குறிப்பு: மின்னஞ்சல் வரவில்லை என்றால், தயவுசெய்து உங்களது Spam / Junk ஃபோல்டரை சரிபார்க்கவும்.<br/>
+          (Note: If you don't receive the email, please check your Spam / Junk folder.)
+        </p>
         <p style={{ marginTop: '20px', textAlign: 'center', fontSize: '0.9rem', color: 'var(--text-light)' }}>
           <Link to="/login" style={{ color: 'var(--primary-color)', fontWeight: '600', textDecoration: 'none' }}>உள்நுழைக (Back to Login)</Link>
         </p>

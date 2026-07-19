@@ -20,13 +20,13 @@ const AuthContext = createContext();
 // ---------- SAMPLE DATA ----------
 const PRODUCTS = [
   // Milk
-  { id: 'p1', name: 'Fresh Milk (பசுவின் பால்)', category: 'milk', variant: '1 L', price: 60, image: MILK_IMG, description: 'எந்தவித கலப்படமும் இல்லாத நேரடி பண்ணை பால். கொமரபாளையத்தில் வெள்ளிக்கிழமை தோறும் விநியோகம்.' },
-  { id: 'p2', name: 'Fresh Milk (பசுவின் பால்)', category: 'milk', variant: '½ L', price: 30, image: MILK_IMG, description: 'உடலுக்கு ஆரோக்கியமான, தூய்மையான பசுவின் பால். கொமரபாளையத்தில் வெள்ளிக்கிழமை தோறும் விநியோகம்.' },
+  { id: 'p1', name: 'Fresh Milk (பசுவின் பால்)', category: 'milk', variant: '1 L', price: 60, image: MILK_IMG, description: 'எந்தவித கலப்படமும் இல்லாத நேரடி பண்ணை பால். கொமரபாளையத்தில் தினமும் விநியோகம்.' },
+  { id: 'p2', name: 'Fresh Milk (பசுவின் பால்)', category: 'milk', variant: '½ L', price: 30, image: MILK_IMG, description: 'உடலுக்கு ஆரோக்கியமான, தூய்மையான பசுவின் பால். கொமரபாளையத்தில் தினமும் விநியோகம்.' },
   // Curd
   { id: 'p3', name: 'Fresh Curd (தயிர்)', category: 'curd', variant: '1 L', price: 80, image: CURD_IMG, description: 'நேரடி பண்ணை பாலில் இருந்து தயாரித்த புளிப்பு கலந்த இயற்கை தயிர்.' },
   { id: 'p4', name: 'Fresh Curd (தயிர்)', category: 'curd', variant: '½ L', price: 40, image: CURD_IMG, description: 'நேரடி பண்ணை பாலில் இருந்து தயாரித்த புளிப்பு கலந்த இயற்கை தயிர்.' },
   // Paneer
-  { id: 'p5', name: 'Fresh Paneer (பனீர்)', category: 'paneer', variant: '200 g', price: 90, image: PANEER_IMG, description: 'தூய பண்ணை பாலில் இருந்து தயாரித்த மென்மையான, புதிய பனீர்.' },
+  { id: 'p5', name: 'Fresh Paneer (பன்னீர்)', category: 'paneer', variant: '200 g', price: 90, image: PANEER_IMG, description: 'தூய பண்ணை பாலில் இருந்து தயாரித்த மென்மையான, புதிய பன்னீர்.' },
   // Cow Butter
   { id: 'p7', name: 'Cow Butter (மாட்டு வெண்ணெய்)', category: 'butter', variant: '500 g', price: 325, image: BUTTER_IMG, description: 'பாரம்பரிய முறையில் மாட்டு பாலில் இருந்து தயாரித்த தூய வெண்ணெய். தமிழகம் முழுவதும் கொரியர் வசதி.' },
   { id: 'p8', name: 'Cow Butter (மாட்டு வெண்ணெய்)', category: 'butter', variant: '750 g', price: 488, image: BUTTER_IMG, description: 'பாரம்பரிய முறையில் மாட்டு பாலில் இருந்து தயாரித்த தூய வெண்ணெய். தமிழகம் முழுவதும் கொரியர் வசதி.' },
@@ -245,7 +245,7 @@ const Home = () => {
               </div>
               <div className="highlight-item">
                 <i className="fas fa-check-circle"></i>
-                <span>வாராந்திர வெள்ளிக்கிழமை விநியோகம்</span>
+                <span>தினசரி விநியோகம்</span>
               </div>
             </div>
           </div>
@@ -286,7 +286,7 @@ const Home = () => {
               <i className="fas fa-truck"></i>
             </div>
             <h3>முறையான விநியோகம்</h3>
-            <p>கொமரபாளையத்தில் ஒவ்வொரு வாரமும் வெள்ளிக்கிழமை உங்கள் இல்லம் தேடி வரும் பால் விநியோகம்.</p>
+            <p>கொமரபாளையத்தில் தினமும் உங்கள் இல்லம் தேடி வரும் பால் விநியோகம்.</p>
           </div>
         </div>
       </section>
@@ -400,7 +400,7 @@ const About = () => {
             <div className="benefit-card" style={{ textAlign: 'center' }}>
               <div className="b-icon" style={{ margin: '0 auto 20px auto' }}>🥛</div>
               <h3>பசுவின் பால்</h3>
-              <p>வாரந்தோறும் வெள்ளிக்கிழமை காலையில் கொமரபாளையத்தில் பிரத்யேகமாக விநியோகம் செய்யப்படுகிறது.</p>
+              <p>தினமும் காலையில் கொமரபாளையத்தில் பிரத்யேகமாக விநியோகம் செய்யப்படுகிறது.</p>
             </div>
             <div className="benefit-card" style={{ textAlign: 'center' }}>
               <div className="b-icon" style={{ margin: '0 auto 20px auto' }}>🧈</div>
@@ -745,7 +745,7 @@ const Order = () => {
 
       // Clear cart and redirect
       cartDispatch({ type: 'CLEAR' });
-      alert('✅ ஆர்டர் வெற்றிகரமாக சமர்ப்பிக்கப்பட்டது! எங்களது வாராந்திர விநியோகம் வெள்ளிக்கிழமை நடைபெறும். நன்றி!');
+      alert('✅ ஆர்டர் வெற்றிகரமாக சமர்ப்பிக்கப்பட்டது! எங்களது விநியோகம் தினமும் நடைபெறும். நன்றி!');
       navigate('/');
     } catch (err) {
       console.error('Submit order error:', err);
@@ -842,9 +842,9 @@ const Order = () => {
             </div>
 
             <div className="benefit-card" style={{ backgroundColor: '#f1f8ee' }}>
-              <h4 style={{ color: 'var(--primary-color)', marginBottom: '10px' }}><i className="fas fa-truck"></i> வாராந்திர வெள்ளிக்கிழமை விநியோகம்</h4>
+              <h4 style={{ color: 'var(--primary-color)', marginBottom: '10px' }}><i className="fas fa-truck"></i> தினசரி விநியோகம்</h4>
               <p style={{ fontSize: '0.9rem', color: '#2b5e2b', lineHeight: 1.5 }}>
-                கொமரபாளையத்தில் பால் வெள்ளிக்கிழமை தோறும் நேரடியாக வழங்கப்படும். தூய நெய் ஆர்டர்கள் Courier மூலம் உடனடியாக அனுப்பப்படும்.
+                கொமரபாளையத்தில் பால் தினமும் நேரடியாக வழங்கப்படும். தூய நெய் ஆர்டர்கள் Courier மூலம் உடனடியாக அனுப்பப்படும்.
               </p>
             </div>
           </div>
@@ -1020,7 +1020,7 @@ const DeliveryInfo = () => {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', lineHeight: 1.7 }}>
           <div>
             <h4 style={{ color: 'var(--primary-color)', fontSize: '1.2rem', marginBottom: '8px' }}><i className="fas fa-city"></i> கொமரபாளையம் நகர பால் விநியோகம்</h4>
-            <p>எங்களது பண்ணை பசுவின் பால் கொமரபாளையம் நகரில் வாரந்தோறும் வெள்ளிக்கிழமை காலை விநியோகம் செய்யப்படுகிறது. திங்கள் முதல் வியாழன் வரை பெறப்படும் ஆர்டர்கள் வெள்ளிக்கிழமை காலையில் உங்கள் இல்லம் தேடி வரும்.</p>
+            <p>எங்களது பண்ணை பசுவின் பால் கொமரபாளையம் நகரில் தினமும் காலை விநியோகம் செய்யப்படுகிறது. ஆர்டர்கள் தினமும் காலையில் உங்கள் இல்லம் தேடி வரும்.</p>
           </div>
 
           <div style={{ borderTop: '1px solid rgba(0,0,0,0.05)', paddingTop: '20px' }}>

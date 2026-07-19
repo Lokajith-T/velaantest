@@ -27,22 +27,22 @@ const PRODUCTS = [
   { id: 'p4', name: 'Fresh Curd (தயிர்)', category: 'curd', variant: '½ L', price: 40, image: CURD_IMG, description: 'நேரடி பண்ணை பாலில் இருந்து தயாரித்த புளிப்பு கலந்த இயற்கை தயிர்.' },
   // Paneer
   { id: 'p5', name: 'Fresh Paneer (பனீர்)', category: 'paneer', variant: '200 g', price: 90, image: PANEER_IMG, description: 'தூய பண்ணை பாலில் இருந்து தயாரித்த மென்மையான, புதிய பனீர்.' },
-  // Maattu Butter
-  { id: 'p6', name: 'Maattu Butter (மாட்டு வெண்ணெய்)', category: 'butter', variant: '1 kg', price: 650, image: BUTTER_IMG, description: 'பாரம்பரிய முறையில் மாட்டு பாலில் இருந்து தயாரித்த தூய வெண்ணெய். தமிழகம் முழுவதும் கொரியர் வசதி.' },
-  { id: 'p7', name: 'Maattu Butter (மாட்டு வெண்ணெய்)', category: 'butter', variant: '½ kg', price: 325, image: BUTTER_IMG, description: 'பாரம்பரிய முறையில் மாட்டு பாலில் இருந்து தயாரித்த தூய வெண்ணெய். தமிழகம் முழுவதும் கொரியர் வசதி.' },
-  { id: 'p8', name: 'Maattu Butter (மாட்டு வெண்ணெய்)', category: 'butter', variant: '¾ kg', price: 488, image: BUTTER_IMG, description: 'பாரம்பரிய முறையில் மாட்டு பாலில் இருந்து தயாரித்த தூய வெண்ணெய். தமிழகம் முழுவதும் கொரியர் வசதி.' },
-  // Eruma Butter
-  { id: 'p9', name: 'Eruma Butter (எருமை வெண்ணெய்)', category: 'butter', variant: '1 kg', price: 750, image: BUTTER_IMG, description: 'எருமை பாலில் இருந்து தயாரித்த வளமான, கொழுப்பு நிறைந்த வெண்ணெய். தமிழகம் முழுவதும் கொரியர் வசதி.' },
-  { id: 'p10', name: 'Eruma Butter (எருமை வெண்ணெய்)', category: 'butter', variant: '½ kg', price: 375, image: BUTTER_IMG, description: 'எருமை பாலில் இருந்து தயாரித்த வளமான, கொழுப்பு நிறைந்த வெண்ணெய். தமிழகம் முழுவதும் கொரியர் வசதி.' },
-  { id: 'p11', name: 'Eruma Butter (எருமை வெண்ணெய்)', category: 'butter', variant: '¾ kg', price: 563, image: BUTTER_IMG, description: 'எருமை பாலில் இருந்து தயாரித்த வளமான, கொழுப்பு நிறைந்த வெண்ணெய். தமிழகம் முழுவதும் கொரியர் வசதி.' },
-  // Maattu Ghee
-  { id: 'p12', name: 'Maattu Ghee (மாட்டு நெய்)', category: 'ghee', variant: '1 L', price: 900, image: GHEE_IMG, description: 'மாட்டு பாலில் இருந்து பாரம்பரிய முறையில் காய்ச்சிய மணமிக்க நெய். தமிழகம் முழுவதும் கொரியர் வசதி.' },
-  { id: 'p13', name: 'Maattu Ghee (மாட்டு நெய்)', category: 'ghee', variant: '½ L', price: 450, image: GHEE_IMG, description: 'மாட்டு பாலில் இருந்து பாரம்பரிய முறையில் காய்ச்சிய மணமிக்க நெய். தமிழகம் முழுவதும் கொரியர் வசதி.' },
-  { id: 'p14', name: 'Maattu Ghee (மாட்டு நெய்)', category: 'ghee', variant: '¾ L', price: 675, image: GHEE_IMG, description: 'மாட்டு பாலில் இருந்து பாரம்பரிய முறையில் காய்ச்சிய மணமிக்க நெய். தமிழகம் முழுவதும் கொரியர் வசதி.' },
-  // Eruma Ghee
-  { id: 'p15', name: 'Eruma Ghee (எருமை நெய்)', category: 'ghee', variant: '1 L', price: 1000, image: GHEE_IMG, description: 'எருமை பாலில் இருந்து பாரம்பரிய முறையில் காய்ச்சிய செழுமையான நெய். தமிழகம் முழுவதும் கொரியர் வசதி.' },
-  { id: 'p16', name: 'Eruma Ghee (எருமை நெய்)', category: 'ghee', variant: '½ L', price: 500, image: GHEE_IMG, description: 'எருமை பாலில் இருந்து பாரம்பரிய முறையில் காய்ச்சிய செழுமையான நெய். தமிழகம் முழுவதும் கொரியர் வசதி.' },
-  { id: 'p17', name: 'Eruma Ghee (எருமை நெய்)', category: 'ghee', variant: '¾ L', price: 750, image: GHEE_IMG, description: 'எருமை பாலில் இருந்து பாரம்பரிய முறையில் காய்ச்சிய செழுமையான நெய். தமிழகம் முழுவதும் கொரியர் வசதி.' },
+  // Cow Butter
+  { id: 'p7', name: 'Cow Butter (மாட்டு வெண்ணெய்)', category: 'butter', variant: '500 g', price: 325, image: BUTTER_IMG, description: 'பாரம்பரிய முறையில் மாட்டு பாலில் இருந்து தயாரித்த தூய வெண்ணெய். தமிழகம் முழுவதும் கொரியர் வசதி.' },
+  { id: 'p8', name: 'Cow Butter (மாட்டு வெண்ணெய்)', category: 'butter', variant: '750 g', price: 488, image: BUTTER_IMG, description: 'பாரம்பரிய முறையில் மாட்டு பாலில் இருந்து தயாரித்த தூய வெண்ணெய். தமிழகம் முழுவதும் கொரியர் வசதி.' },
+  { id: 'p6', name: 'Cow Butter (மாட்டு வெண்ணெய்)', category: 'butter', variant: '1 kg', price: 650, image: BUTTER_IMG, description: 'பாரம்பரிய முறையில் மாட்டு பாலில் இருந்து தயாரித்த தூய வெண்ணெய். தமிழகம் முழுவதும் கொரியர் வசதி.' },
+  // Buffalo Butter
+  { id: 'p10', name: 'Buffalo Butter (எருமை வெண்ணெய்)', category: 'butter', variant: '500 g', price: 375, image: BUTTER_IMG, description: 'எருமை பாலில் இருந்து தயாரித்த வளமான, கொழுப்பு நிறைந்த வெண்ணெய். தமிழகம் முழுவதும் கொரியர் வசதி.' },
+  { id: 'p11', name: 'Buffalo Butter (எருமை வெண்ணெய்)', category: 'butter', variant: '750 g', price: 563, image: BUTTER_IMG, description: 'எருமை பாலில் இருந்து தயாரித்த வளமான, கொழுப்பு நிறைந்த வெண்ணெய். தமிழகம் முழுவதும் கொரியர் வசதி.' },
+  { id: 'p9', name: 'Buffalo Butter (எருமை வெண்ணெய்)', category: 'butter', variant: '1 kg (if available)', price: 750, image: BUTTER_IMG, description: 'எருமை பாலில் இருந்து தயாரித்த வளமான, கொழுப்பு நிறைந்த வெண்ணெய். தமிழகம் முழுவதும் கொரியர் வசதி.' },
+  // Cow Ghee
+  { id: 'p13', name: 'Cow Ghee (மாட்டு நெய்)', category: 'ghee', variant: '500 ml', price: 450, image: GHEE_IMG, description: 'மாட்டு பாலில் இருந்து பாரம்பரிய முறையில் காய்ச்சிய மணமிக்க நெய். தமிழகம் முழுவதும் கொரியர் வசதி.' },
+  { id: 'p14', name: 'Cow Ghee (மாட்டு நெய்)', category: 'ghee', variant: '750 ml', price: 675, image: GHEE_IMG, description: 'மாட்டு பாலில் இருந்து பாரம்பரிய முறையில் காய்ச்சிய மணமிக்க நெய். தமிழகம் முழுவதும் கொரியர் வசதி.' },
+  { id: 'p12', name: 'Cow Ghee (மாட்டு நெய்)', category: 'ghee', variant: '1 L', price: 900, image: GHEE_IMG, description: 'மாட்டு பாலில் இருந்து பாரம்பரிய முறையில் காய்ச்சிய மணமிக்க நெய். தமிழகம் முழுவதும் கொரியர் வசதி.' },
+  // Buffalo Ghee
+  { id: 'p16', name: 'Buffalo Ghee (எருமை நெய்)', category: 'ghee', variant: '500 ml', price: 500, image: GHEE_IMG, description: 'எருமை பாலில் இருந்து பாரம்பரிய முறையில் காய்ச்சிய செழுமையான நெய். தமிழகம் முழுவதும் கொரியர் வசதி.' },
+  { id: 'p17', name: 'Buffalo Ghee (எருமை நெய்)', category: 'ghee', variant: '750 ml', price: 750, image: GHEE_IMG, description: 'எருமை பாலில் இருந்து பாரம்பரிய முறையில் காய்ச்சிய செழுமையான நெய். தமிழகம் முழுவதும் கொரியர் வசதி.' },
+  { id: 'p15', name: 'Buffalo Ghee (எருமை நெய்)', category: 'ghee', variant: '1 L', price: 1000, image: GHEE_IMG, description: 'எருமை பாலில் இருந்து பாரம்பரிய முறையில் காய்ச்சிய செழுமையான நெய். தமிழகம் முழுவதும் கொரியர் வசதி.' },
 ];
 
 // ---------- REDUCERS ----------

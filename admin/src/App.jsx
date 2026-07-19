@@ -56,7 +56,7 @@ const Admin = () => {
         const ordersList = Object.entries(data).map(([id, val]) => ({
           id,
           ...val
-        })).reverse();
+        })).filter(o => !o.adminDeleted).reverse();
         setOrders(ordersList);
       } else {
         setOrders([]);
@@ -107,14 +107,18 @@ const Admin = () => {
     }
   };
 
-  const deleteOrder = async (id) => {
+  const deleteOrder = async (id, status) => {
+    if (!status.includes('Delivered') && !status.includes('வழங்கப்பட்டது')) {
+      alert('வழங்கப்பட்ட (Delivered) ஆர்டர்களை மட்டுமே நீக்க முடியும். (You can only delete Delivered orders.)');
+      return;
+    }
     if (window.confirm('இந்த ஆர்டரை நீக்கலாமா?')) {
       try {
         const orderRef = ref(database, `orders/${id}`);
-        await remove(orderRef);
+        await update(orderRef, { adminDeleted: true });
       } catch (err) {
         console.error('Delete order error:', err);
-        alert('ஆர்டரை நீக்குவதில் பிழை ஏற்பட்டது.');
+        alert('நீக்குவதில் பிழை ஏற்பட்டது.');
       }
     }
   };
@@ -255,13 +259,16 @@ const Admin = () => {
                                 <option key={s.value} value={s.value}>{s.label}</option>
                               ))}
                             </select>
-                            <button
-                              onClick={() => deleteOrder(o.id)}
-                              className="remove-btn"
-                              style={{ padding: '4px' }}
-                            >
-                              <i className="fas fa-trash-alt"></i>
-                            </button>
+                            { (o.status.includes('Delivered') || o.status.includes('வழங்கப்பட்டது')) && (
+                              <button
+                                onClick={() => deleteOrder(o.id, o.status)}
+                                className="remove-btn"
+                                style={{ padding: '4px' }}
+                                title="Delete Order"
+                              >
+                                <i className="fas fa-trash-alt"></i>
+                              </button>
+                            )}
                           </div>
                         </td>
                       </tr>

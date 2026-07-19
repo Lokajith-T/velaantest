@@ -481,7 +481,7 @@ const Products = () => {
                 { key: 'all', label: 'அனைத்தும்', img: null },
                 { key: 'milk', label: 'பால்', img: MILK_IMG },
                 { key: 'curd', label: 'தயிர்', img: CURD_IMG },
-                { key: 'paneer', label: 'பனீர்', img: PANEER_IMG },
+                { key: 'paneer', label: 'பன்னீர்', img: PANEER_IMG },
                 { key: 'butter', label: 'வெண்ணெய்', img: BUTTER_IMG },
                 { key: 'ghee', label: 'நெய்', img: GHEE_IMG },
               ].map(({ key, label, img }) => (

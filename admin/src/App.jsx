@@ -136,13 +136,13 @@ const Admin = () => {
   }
 
   return (
-    <section style={{ paddingTop: '140px', minHeight: '85vh' }}>
+    <section style={{ paddingTop: 'clamp(90px, 12vw, 140px)', minHeight: '85vh' }}>
       <div style={{ maxWidth: '1700px', margin: '0 auto', padding: '0 4%' }}>
         <span className="section-subtitle">நிர்வாகம்</span>
-        <h2 style={{ fontSize: '2.5rem', color: 'var(--primary-dark)', marginBottom: '30px' }}>கண்காணிப்புத் தளம் (Admin Dashboard)</h2>
+        <h2 style={{ fontSize: 'clamp(1.6rem, 4vw, 2.5rem)', color: 'var(--primary-dark)', marginBottom: '30px' }}>கண்காணிப்புத் தளம் (Admin Dashboard)</h2>
 
         {/* Tab Selectors */}
-        <div style={{ display: 'flex', gap: '15px', marginBottom: '30px', borderBottom: '1px solid rgba(0,0,0,0.1)', paddingBottom: '10px' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginBottom: '30px', borderBottom: '1px solid rgba(0,0,0,0.1)', paddingBottom: '10px' }}>
           <button 
             onClick={() => setActiveTab('orders')} 
             className="btn"
@@ -222,15 +222,15 @@ const Admin = () => {
                   <tbody>
                     {orders.map(o => (
                       <tr key={o.id}>
-                        <td>
+                        <td data-label="வாடிக்கையாளர்">
                           <strong>{o.customer}</strong>
                           <div style={{ fontSize: '0.8rem', color: 'var(--text-light)' }}>{o.phone}</div>
                         </td>
-                        <td style={{ fontSize: '0.9rem' }}>{o.products}</td>
-                        <td style={{ fontSize: '0.85rem', maxWidth: '200px' }}>{o.address}</td>
-                        <td style={{ fontWeight: '600' }}>₹{o.total}</td>
-                        <td style={{ fontSize: '0.85rem' }}>{o.date}</td>
-                        <td>
+                        <td data-label="தயாரிப்புகள்" style={{ fontSize: '0.9rem' }}>{o.products}</td>
+                        <td data-label="முகவரி" style={{ fontSize: '0.85rem', maxWidth: '200px' }}>{o.address}</td>
+                        <td data-label="மொத்தம்" style={{ fontWeight: '600' }}>₹{o.total}</td>
+                        <td data-label="தேதி" style={{ fontSize: '0.85rem' }}>{o.date}</td>
+                        <td data-label="நிலை">
                           {(() => {
                             const st = ORDER_STATUSES.find(s => o.status.includes(s.value.split(' ')[0])) || ORDER_STATUSES[0];
                             return (
@@ -243,8 +243,8 @@ const Admin = () => {
                             );
                           })()}
                         </td>
-                        <td>
-                          <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                        <td data-label="செயல்">
+                          <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
                             <select
                               value={o.status}
                               onChange={e => updateStatus(o.id, e.target.value)}
@@ -357,7 +357,7 @@ const Login = () => {
   };
 
   return (
-    <section style={{ paddingTop: '140px', minHeight: '80vh' }}>
+    <section style={{ paddingTop: 'clamp(90px, 12vw, 140px)', minHeight: '80vh' }}>
       {showSplash && (
         <div className="water-loader-container">
           <div className="water-logo-wrapper">
@@ -393,6 +393,9 @@ const Login = () => {
 const App = () => {
   const [auth, authDispatch] = useReducer(authReducer, initialAuth);
   const authContextValue = useMemo(() => ({ state: auth, dispatch: authDispatch }), [auth]);
+  const [menuOpen, setMenuOpen] = React.useState(false);
+
+  const handleMenuToggle = () => setMenuOpen(prev => !prev);
 
   return (
     <AuthContext.Provider value={authContextValue}>
@@ -407,14 +410,29 @@ const App = () => {
                 <span className="nav-brand-text">வேளாண் பண்ணை <span style={{ fontSize: '0.9rem', color: 'var(--accent-color)' }}>[நிர்வாகம்]</span></span>
               </Link>
 
-              <ul className="nav-links active">
+              {/* Hamburger toggle — only visible on mobile via CSS */}
+              {auth.user && (
+                <button
+                  id="mobile-menu"
+                  className={`menu-toggle${menuOpen ? ' is-active' : ''}`}
+                  onClick={handleMenuToggle}
+                  aria-label="Toggle menu"
+                  style={{ background: 'none', border: 'none' }}
+                >
+                  <span className="bar"></span>
+                  <span className="bar"></span>
+                  <span className="bar"></span>
+                </button>
+              )}
+
+              <ul className={`nav-links${menuOpen ? ' active' : ''}`}>
                 {auth.user && (
-                  <li style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                  <li style={{ display: 'flex', alignItems: 'center', gap: '15px', flexWrap: 'wrap', justifyContent: 'center' }}>
                     <span style={{ fontSize: '0.9rem', fontWeight: '600', color: 'var(--primary-color)' }}>
                       👤 {auth.user.name} ({auth.user.role})
                     </span>
                     <button
-                      onClick={() => { authDispatch({ type: 'LOGOUT' }); }}
+                      onClick={() => { authDispatch({ type: 'LOGOUT' }); setMenuOpen(false); }}
                       className="btn btn-secondary"
                       style={{ padding: '6px 12px', fontSize: '0.8rem' }}
                     >

@@ -644,7 +644,8 @@ section {
     text-align: center;
     color: white;
     background: linear-gradient(rgba(30, 94, 58, 0.9), rgba(18, 61, 36, 0.95)), url('/shop/image2.jpeg') center/cover no-repeat;
-    background-attachment: fixed;
+    /* iOS Safari doesn't support background-attachment: fixed on non-body elements */
+    background-attachment: scroll;
 }
 
 .cta-content {
@@ -1017,6 +1018,92 @@ footer {
     .contact-form-panel {
         padding: 30px 20px;
     }
+
+    /* ===== Mobile fixes ===== */
+
+    /* Admin card padding reduced */
+    .admin-card {
+        padding: 20px 15px;
+    }
+
+    /* Order table → card-style on mobile */
+    .order-table thead {
+        display: none;
+    }
+    .order-table tbody tr {
+        display: block;
+        background: var(--card-background);
+        border-radius: var(--border-radius);
+        margin-bottom: 18px;
+        box-shadow: 0 4px 12px var(--shadow-color);
+        padding: 16px;
+        border: 1px solid rgba(30, 94, 58, 0.07);
+    }
+    .order-table tbody td {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 8px 4px;
+        border-bottom: 1px solid rgba(30, 94, 58, 0.05);
+        font-size: 0.9rem;
+        gap: 8px;
+    }
+    .order-table tbody td:last-child {
+        border-bottom: none;
+    }
+    .order-table tbody td::before {
+        content: attr(data-label);
+        font-weight: 700;
+        color: var(--primary-color);
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        min-width: 110px;
+        flex-shrink: 0;
+    }
+
+    /* Login / order form card padding */
+    .form-card {
+        padding: 28px 20px;
+        margin: 0 10px;
+    }
+
+    /* Benefit cards */
+    .benefit-card {
+        padding: 20px 15px;
+    }
+
+    /* Cart items stack vertically on mobile */
+    .cart-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+    }
+    .cart-item-price {
+        text-align: left;
+    }
+
+    /* Hero stats wrap on mobile */
+    .hero-stats {
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    /* Hero actions stack on mobile */
+    .hero-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* Water loader reduce for small screens */
+    .water-logo-wrapper {
+        width: 260px;
+        height: 260px;
+    }
+    .water-fill-logo-img {
+        width: 260px;
+        height: 260px;
+    }
 }
 
 /* Custom Extra Styles for React App Pages */
@@ -1038,7 +1125,7 @@ footer {
 }
 .products-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 30px;
     max-width: 1700px;
     margin: 0 auto;
@@ -1366,4 +1453,92 @@ footer {
 .water-loader-text p {
     font-size: 1.1rem;
     color: var(--text-light);
+}
+
+/* ===== Extra-small screens (phones < 480px) ===== */
+@media (max-width: 480px) {
+    section {
+        padding: 70px 4% 50px 4%;
+    }
+
+    .nav-brand-text {
+        font-size: 1.1rem;
+    }
+
+    .nav-logo-img {
+        height: 38px;
+        width: 38px;
+    }
+
+    .section-subtitle {
+        font-size: 0.75rem;
+    }
+
+    /* Buttons smaller */
+    .btn {
+        padding: 11px 18px;
+        font-size: 0.9rem;
+    }
+
+    /* CTA banner padding */
+    .cta-banner {
+        padding: 70px 5%;
+    }
+    .cta-content h2 {
+        font-size: 1.6rem;
+    }
+
+    /* Footer */
+    footer {
+        padding: 40px 4% 20px 4%;
+    }
+
+    /* Water loader smallest size */
+    .water-logo-wrapper {
+        width: 200px;
+        height: 200px;
+    }
+    .water-fill-logo-img {
+        width: 200px;
+        height: 200px;
+    }
+
+    /* Product grid — single column on tiny phones */
+    .products-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Cart quantity controls */
+    .cart-qty-control {
+        gap: 8px;
+    }
+
+    /* Summary rows font size */
+    .summary-row {
+        font-size: 0.95rem;
+    }
+    .summary-row.total {
+        font-size: 1.2rem;
+    }
+
+    /* Form card */
+    .form-card {
+        padding: 22px 14px;
+    }
+
+    .form-title {
+        font-size: 1.4rem;
+    }
+
+    /* Hero heading shrink */
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+
+    /* About heading shrink */
+    .about-content h2,
+    .benefits-header h2,
+    .contact-info-panel h2 {
+        font-size: 1.8rem;
+    }
 }

@@ -698,12 +698,13 @@ const Order = () => {
   }, [isCodAllowed, paymentMethod]);
 
   const [errors, setErrors] = useState({});
+  const [orderSuccessData, setOrderSuccessData] = useState(null);
 
   useEffect(() => {
-    if (cart.length === 0) {
+    if (cart.length === 0 && !orderSuccessData) {
       navigate('/products');
     }
-  }, [cart, navigate]);
+  }, [cart, navigate, orderSuccessData]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -760,8 +761,7 @@ const Order = () => {
         await push(ordersRef, finalOrderData);
 
         cartDispatch({ type: 'CLEAR' });
-        alert('✅ ஆர்டர் வெற்றிகரமாக பெறப்பட்டது (Cash on Delivery)!');
-        navigate('/');
+        setOrderSuccessData(finalOrderData);
         return;
       }
 
@@ -812,8 +812,7 @@ const Order = () => {
               await push(ordersRef, finalOrderData);
 
               cartDispatch({ type: 'CLEAR' });
-              alert('✅ பணம் வெற்றிகரமாக செலுத்தப்பட்டது. ஆர்டர் பெறப்பட்டது!');
-              navigate('/');
+              setOrderSuccessData(finalOrderData);
             } else {
               alert('பணம் செலுத்துவதில் பிழை. Payment verification failed.');
             }
@@ -843,6 +842,27 @@ const Order = () => {
       alert('ஆர்டர் சமர்ப்பிப்பதில் பிழை ஏற்பட்டது. தயவுசெய்து மீண்டும் முயற்சிக்கவும்.');
     }
   };
+
+  if (orderSuccessData) {
+    return (
+      <section style={{ paddingTop: '140px', minHeight: '85vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ background: 'white', padding: '40px', borderRadius: '16px', textAlign: 'center', maxWidth: '500px', boxShadow: '0 10px 30px rgba(0,0,0,0.1)', width: '90%' }}>
+          <div style={{ width: '80px', height: '80px', background: '#25D366', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px', color: 'white', fontSize: '40px', boxShadow: '0 4px 15px rgba(37, 211, 102, 0.3)', animation: 'pulse 2s infinite' }}>
+            <i className="fas fa-check"></i>
+          </div>
+          <h2 style={{ color: 'var(--primary-dark)', marginBottom: '10px' }}>ஆர்டர் பெறப்பட்டது!</h2>
+          <p style={{ color: 'var(--text-light)', marginBottom: '20px' }}>நன்றி {orderSuccessData.customer}! உங்கள் ஆர்டர் வெற்றிகரமாக பதிவு செய்யப்பட்டது.</p>
+          <div style={{ background: '#f7f9f6', padding: '15px', borderRadius: '8px', marginBottom: '25px', textAlign: 'left', border: '1px solid rgba(30, 94, 58, 0.1)' }}>
+            <p style={{ margin: '5px 0' }}><strong>பணம் செலுத்தும் முறை:</strong> {orderSuccessData.payment_id === 'COD' ? 'Cash on Delivery' : 'Online Paid'}</p>
+            <p style={{ margin: '5px 0' }}><strong>மொத்த தொகை:</strong> ₹{orderSuccessData.total}</p>
+          </div>
+          <button onClick={() => navigate('/')} className="btn btn-primary w-100" style={{ padding: '14px' }}>
+            மேலும் பொருட்கள் வாங்க (Continue Shopping)
+          </button>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section style={{ paddingTop: '140px', minHeight: '85vh' }}>

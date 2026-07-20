@@ -847,12 +847,12 @@ const Order = () => {
   return (
     <section style={{ paddingTop: '140px', minHeight: '85vh' }}>
       <div style={{ maxWidth: '1700px', margin: '0 auto', padding: '0 4%' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '40px' }}>
+        <div className="checkout-layout">
 
           <div className="form-card" style={{ maxWidth: 'none', margin: 0 }}>
             <h3 className="form-title" style={{ textAlign: 'left' }}>விநியோக முகவரி (Delivery Address)</h3>
             <form onSubmit={handleSubmit}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+              <div className="checkout-row-2">
                 <div className="form-group">
                   <label>பெயர் (Name) *</label>
                   <input type="text" name="name" value={form.name} onChange={handleChange} required />
@@ -877,7 +877,7 @@ const Order = () => {
                 {errors.address && <span style={{ color: '#dc3545', fontSize: '0.85rem' }}>{errors.address}</span>}
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '15px' }}>
+              <div className="checkout-row-3">
                 <div className="form-group">
                   <label>நகரம் (City/Town) *</label>
                   <input type="text" name="city" value={form.city} onChange={handleChange} required />
@@ -902,7 +902,7 @@ const Order = () => {
 
               <div className="form-group" style={{ marginBottom: '20px' }}>
                 <label>பணம் செலுத்தும் முறை (Payment Method)</label>
-                <div style={{ display: 'flex', gap: '20px', marginTop: '10px' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', marginTop: '10px' }}>
                   <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontWeight: 'normal' }}>
                     <input 
                       type="radio" 

@@ -2,14 +2,14 @@ import { initializeApp } from "firebase/app";
 import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCUBymUxDZfEVx_YVKkkCuZC6fGZO7s3fc",
-  authDomain: "velaanmilk.firebaseapp.com",
-  databaseURL: "https://velaanmilk-default-rtdb.firebaseio.com",
-  projectId: "velaanmilk",
-  storageBucket: "velaanmilk.firebasestorage.app",
-  messagingSenderId: "866934507233",
-  appId: "1:866934507233:web:ea08e484786eca44f719a0",
-  measurementId: "G-NE5H710KHD"
+  apiKey: "AIzaSyBo0ldzIAwgUbS31wn-sQ41N4WEIM5OT00",
+  authDomain: "gen-lang-client-02323438-4fe71.firebaseapp.com",
+  databaseURL: "https://gen-lang-client-02323438-4fe71-default-rtdb.firebaseio.com",
+  projectId: "gen-lang-client-02323438-4fe71",
+  storageBucket: "gen-lang-client-02323438-4fe71.firebasestorage.app",
+  messagingSenderId: "97089403770",
+  appId: "1:97089403770:web:331702d7d94ffc32b9b4c3",
+  measurementId: "G-8LS3MPMFJ4"
 };
 
 // Initialize Firebase

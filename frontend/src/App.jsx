@@ -741,7 +741,7 @@ const Order = () => {
     };
 
     try {
-      const apiUrl = import.meta.env.MODE === 'development' ? 'http://localhost:5000/api' : '/api';
+      const apiUrl = import.meta.env.MODE === 'development' ? 'http://localhost:5000/api' : 'https://velaantest.onrender.com/api';
       
       // 1. Create Razorpay order on backend
       const res = await fetch(`${apiUrl}/razorpay/create-order`, {

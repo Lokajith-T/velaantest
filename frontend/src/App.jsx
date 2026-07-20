@@ -688,6 +688,15 @@ const Order = () => {
     notes: ''
   });
 
+  const isCodAllowed = cart.length > 0 && cart.every(item => item.category === 'milk' || item.category === 'curd');
+  const [paymentMethod, setPaymentMethod] = useState('online');
+
+  useEffect(() => {
+    if (!isCodAllowed && paymentMethod === 'cod') {
+      setPaymentMethod('online');
+    }
+  }, [isCodAllowed, paymentMethod]);
+
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
@@ -741,6 +750,21 @@ const Order = () => {
     };
 
     try {
+      if (paymentMethod === 'cod') {
+        const finalOrderData = {
+          ...orderData,
+          status: 'விநியோகத்தில் (Pending)',
+          payment_id: 'COD'
+        };
+        const ordersRef = ref(database, 'orders');
+        await push(ordersRef, finalOrderData);
+
+        cartDispatch({ type: 'CLEAR' });
+        alert('✅ ஆர்டர் வெற்றிகரமாக பெறப்பட்டது (Cash on Delivery)!');
+        navigate('/');
+        return;
+      }
+
       const apiUrl = import.meta.env.MODE === 'development' ? 'http://localhost:5000/api' : 'https://velaantest.onrender.com/api';
       
       // 1. Create Razorpay order on backend
@@ -874,6 +898,38 @@ const Order = () => {
               <div className="form-group">
                 <label>குறிப்புகள் (Delivery Notes)</label>
                 <textarea name="notes" value={form.notes} onChange={handleChange} rows="3" placeholder="ஏதேனும் கூடுதல் தகவல்கள்..."></textarea>
+              </div>
+
+              <div className="form-group" style={{ marginBottom: '20px' }}>
+                <label>பணம் செலுத்தும் முறை (Payment Method)</label>
+                <div style={{ display: 'flex', gap: '20px', marginTop: '10px' }}>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontWeight: 'normal' }}>
+                    <input 
+                      type="radio" 
+                      name="paymentMethod" 
+                      value="online" 
+                      checked={paymentMethod === 'online'} 
+                      onChange={() => setPaymentMethod('online')} 
+                    />
+                    Online Payment (UPI/Card)
+                  </label>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: isCodAllowed ? 'pointer' : 'not-allowed', opacity: isCodAllowed ? 1 : 0.5, fontWeight: 'normal' }}>
+                    <input 
+                      type="radio" 
+                      name="paymentMethod" 
+                      value="cod" 
+                      checked={paymentMethod === 'cod'} 
+                      onChange={() => setPaymentMethod('cod')}
+                      disabled={!isCodAllowed}
+                    />
+                    Cash on Delivery (COD)
+                  </label>
+                </div>
+                {!isCodAllowed && (
+                  <p style={{ fontSize: '0.85rem', color: '#dc3545', marginTop: '5px' }}>
+                    * நெய் போன்ற மற்ற பொருட்களுக்கு COD வசதி இல்லை. ஆன்லைன் மூலமாகவே செலுத்த வேண்டும்.
+                  </p>
+                )}
               </div>
 
               <button type="submit" className="btn btn-primary w-100" style={{ padding: '14px', marginTop: '10px' }}>

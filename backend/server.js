@@ -263,8 +263,8 @@ app.get('/api/products', async (req, res) => {
 app.post('/api/razorpay/create-order', async (req, res) => {
   try {
     const { amount } = req.body;
-    if (!amount) {
-      return res.status(400).json({ error: 'Amount is required' });
+    if (!amount || amount < 1) {
+      return res.status(400).json({ error: 'Amount is required and must be at least 1 INR' });
     }
 
     const options = {

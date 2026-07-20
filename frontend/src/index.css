@@ -31,6 +31,8 @@ body {
     color: var(--text-color);
     line-height: 1.6;
     overflow-x: hidden;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 /* Scrollbar styling */
@@ -1619,7 +1621,7 @@ footer {
     .about-content h2,
     .benefits-header h2,
     .contact-info-panel h2 {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
     }
 }
 

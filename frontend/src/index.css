@@ -946,12 +946,7 @@ footer {
     }
 
     .floating-card {
-        opacity: 1 !important;
-        visibility: visible !important;
-        scale: 1 !important;
-        translate: 0 0 !important;
-        animation: float 4s ease-in-out infinite !important;
-        pointer-events: auto !important;
+        display: none !important;
     }
 }
 

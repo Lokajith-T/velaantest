@@ -741,16 +741,82 @@ const Order = () => {
     };
 
     try {
-      const ordersRef = ref(database, 'orders');
-      await push(ordersRef, orderData);
+      const apiUrl = import.meta.env.MODE === 'development' ? 'http://localhost:5000/api' : '/api';
+      
+      // 1. Create Razorpay order on backend
+      const res = await fetch(`${apiUrl}/razorpay/create-order`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: total })
+      });
+      const order = await res.json();
+      
+      if (!order.id) {
+        throw new Error('Failed to create Razorpay order');
+      }
 
-      // Clear cart and redirect
-      cartDispatch({ type: 'CLEAR' });
-      alert('✅ ஆர்டர் வெற்றிகரமாக சமர்ப்பிக்கப்பட்டது! எங்களது விநியோகம் தினமும் நடைபெறும். நன்றி!');
-      navigate('/');
+      // 2. Initialize Razorpay Checkout
+      const options = {
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID || 'dummy_key',
+        amount: order.amount,
+        currency: order.currency,
+        name: "வேளாண் பண்ணை",
+        description: "Payment for order",
+        order_id: order.id,
+        handler: async function (response) {
+          try {
+            // 3. Verify Payment
+            const verifyRes = await fetch(`${apiUrl}/razorpay/verify-payment`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature
+              })
+            });
+            const verifyData = await verifyRes.json();
+            
+            if (verifyData.verified) {
+              // 4. Save to Firebase
+              const finalOrderData = {
+                ...orderData,
+                status: 'Paid',
+                payment_id: response.razorpay_payment_id
+              };
+              const ordersRef = ref(database, 'orders');
+              await push(ordersRef, finalOrderData);
+
+              cartDispatch({ type: 'CLEAR' });
+              alert('✅ பணம் வெற்றிகரமாக செலுத்தப்பட்டது. ஆர்டர் பெறப்பட்டது!');
+              navigate('/');
+            } else {
+              alert('பணம் செலுத்துவதில் பிழை. Payment verification failed.');
+            }
+          } catch (err) {
+            console.error('Verification error:', err);
+            alert('பணம் செலுத்துவதில் பிழை. Please contact support.');
+          }
+        },
+        prefill: {
+          name: form.name,
+          email: form.email || "support@velaanfarm.com",
+          contact: form.phone
+        },
+        theme: {
+          color: "#1e5e3a"
+        }
+      };
+
+      const rzp1 = new window.Razorpay(options);
+      rzp1.on('payment.failed', function (response){
+        alert("Payment failed: " + response.error.description);
+      });
+      rzp1.open();
+
     } catch (err) {
       console.error('Submit order error:', err);
-      alert('ஆர்டர் சமர்ப்பிப்பதில் பிழை ஏற்பட்டது.');
+      alert('ஆர்டர் சமர்ப்பிப்பதில் பிழை ஏற்பட்டது. தயவுசெய்து மீண்டும் முயற்சிக்கவும்.');
     }
   };
 

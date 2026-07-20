@@ -5,6 +5,11 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import crypto from 'crypto';
+import dotenv from 'dotenv';
+import Razorpay from 'razorpay';
+
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -12,6 +17,11 @@ const __dirname = path.dirname(__filename);
 const PORT = process.env.PORT || 5000;
 const JWT_SECRET = process.env.JWT_SECRET || 'velaan_farm_super_secret_key_123';
 const DB_PATH = path.join(__dirname, 'database.sqlite');
+
+const razorpayInstance = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID || 'dummy_key_id',
+  key_secret: process.env.RAZORPAY_KEY_SECRET || 'dummy_key_secret',
+});
 
 const app = express();
 
@@ -245,6 +255,54 @@ app.get('/api/products', async (req, res) => {
     res.json(products);
   } catch (error) {
     console.error('Fetch products error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Razorpay: Create Order
+app.post('/api/razorpay/create-order', async (req, res) => {
+  try {
+    const { amount } = req.body;
+    if (!amount) {
+      return res.status(400).json({ error: 'Amount is required' });
+    }
+
+    const options = {
+      amount: amount * 100, // amount in the smallest currency unit
+      currency: 'INR',
+      receipt: `receipt_order_${Date.now()}`
+    };
+
+    const order = await razorpayInstance.orders.create(options);
+    res.json(order);
+  } catch (error) {
+    console.error('Razorpay create order error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Razorpay: Verify Payment
+app.post('/api/razorpay/verify-payment', async (req, res) => {
+  try {
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+    
+    if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
+      return res.status(400).json({ error: 'Missing payment details' });
+    }
+
+    const sign = razorpay_order_id + "|" + razorpay_payment_id;
+    const expectedSign = crypto
+      .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET || 'dummy_key_secret')
+      .update(sign.toString())
+      .digest("hex");
+
+    if (razorpay_signature === expectedSign) {
+      return res.json({ message: "Payment verified successfully", verified: true });
+    } else {
+      return res.status(400).json({ error: "Invalid signature sent", verified: false });
+    }
+  } catch (error) {
+    console.error('Razorpay verify payment error:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
